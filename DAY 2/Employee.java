@@ -20,6 +20,8 @@ class Employee {
     void display() {
 
         System.out.println("Id = "+id+" , Name = "+name+" Salary = "+salary);
+        System.out.println("Address: ");
         System.out.println("State: "+address.state+" , City: "+address.city+" pin: "+address.pin);
+        System.out.println("...............................");
     }
 }
