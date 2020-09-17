@@ -1,20 +1,40 @@
 public class MainBank {
     public static void main(String[] args) {
-        long AccountNumber = Long.parseLong(args[0]);
-        double depositamount = Double.parseDouble(args[1]);
-        Account acc = getAccount(AccountNumber);
+        long accountNumber1 = Long.parseLong(args[0]);
+        long accountNumber2 = Long.parseLong(args[0]);
+        double depositamount = Double.parseDouble(args[2]);
+        Account withdrawAccount = getAccount(AccountNumber1);
+        Account depositamount = Double.parseDouble(args[2]);
 
-        if(acc==null)
-        {
-            System.out.println("Invalid account number");
+        Account withdrawAccount = getAccount(accountNumber1);
+        Account destinationAccount = getAccount(accountNumber2);
+        if(withdrawAccount == null || destinationAccount == null){
+            System.out.println("Invalid");
 
         }
-        else
-        {
-            acc.accountInformation();
-            acc.deposit(depositamount);
-            acc.accountInformation();
+
+        else{
+            withdrawAccount.accountInformation();
+            destinationAccount.accountInformation();
+            if(depositamount>withdrawAccount.balance)
+            {
+                System.out.println("Insufficient");
+            }
+            else{
+                withdrawAccount.accountInformation();
+                destinationAccount.accountInformation();
+                if(depositamount>withdrawAccount.balance){
+                    System.out.println("Not sufficient");
+                }
+                else{
+                    withdrawAccount.withdraw(depositamount);
+                    destinationAccount.deposit(depositamount);
+                }
+                withdrawAccount.accountInformation();
+                destinationAccount.accountInformation();
+            }
         }
+
         
         
     }

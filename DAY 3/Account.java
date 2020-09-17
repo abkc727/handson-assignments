@@ -21,16 +21,14 @@ public class Account {
         return accountNumber;
     }
     public void withdraw(double amount) {
-        System.out.println("withdraws amount from account");
 	if(amount > balance){
-		System.out.println("insufficient balance in source");
+		System.out.println("insufficient balance");
 		System.exit(0);
 	}
 	balance-=amount;
     }
 
     public void deposit(double amount) {
-        System.out.println("deposits amount to account");
 	balance+=amount;
     }
     public void accountInformation() {

@@ -12,7 +12,6 @@ class RDAccount extends Account {
         System.out.println("7.5% interest in a year");
     }
     void schedulesList() {
-        System.out.print("Schedule: ");
         for(String s : schedules) {
             System.out.print(s+" ");
         }

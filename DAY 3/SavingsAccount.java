@@ -8,10 +8,10 @@ class SavingsAccount extends Account {
     }
 
     void minimumBalance() {
-        System.out.println("You must have minimum 5000Rs. balance");
+        System.out.println("must have minimum 5000Rs. balance");
     }
     void withdrawLimit() {
-        System.out.println("Withdraw limit in Savings is 50000");
+        System.out.println("Withdraw limit is 50000");
     }
 
 
