@@ -1,0 +1,33 @@
+package com.hsbc.controller;
+
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.hsbc.model.service.ProfileService;
+import com.hsbc.model.utility.ProfileFactory;
+
+/**
+ * Servlet implementation class ViewAllContactsServlet
+ */
+@WebServlet("/ViewAllContactsServlet")
+public class ViewAllContactsServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		ProfileService service = (ProfileService) ProfileFactory.getInstance("service");
+		List<User> usersList = service.fetchAllUsers();
+		// you can set this list inside request object only
+		request.setAttribute("listKey", usersList);
+		RequestDispatcher rd = request.getRequestDispatcher("displayAll.jsp");
+		rd.forward(request, response);
+	}
+
+	
+
+}

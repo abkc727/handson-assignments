@@ -1,0 +1,88 @@
+package com.hsbc.model.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import com.hsbc.exception.AuthenticationException;
+import com.hsbc.model.beans.Profile;
+import com.hsbc.model.utility.DBUtility;
+
+public class ProfileDaoImpl implements ProfileDao {
+
+	@Override
+	public Profile authenticate(int profileId, String password) throws AuthenticationException {
+		Profile profile = null;
+		try {
+			Connection connection = DBUtility.getConnection();
+			PreparedStatement sequenceStatement = connection.prepareStatement("select * from profile where profile_id = ?, password = ?");
+			sequenceStatement.setInt(1, profileId);
+			sequenceStatement.setString(1, password);
+			
+			ResultSet rs = sequenceStatement.executeQuery();
+			while(rs.next()) {
+				profile = new Profile();
+				profile.setDob(rs.getString("dob"));
+				profile.setName(rs.getString("name"));
+				profile.setPassword(rs.getString("password"));
+				profile.setPhone(rs.getLong("phone"));
+				profile.setProfileId(rs.getInt("profile_id"));
+				
+				return profile;
+				
+			}
+			rs.close();
+			sequenceStatement.close();
+			connection.close();
+		
+		if(profile == null) {
+			throw new AuthenticationException("Sorry Username or Password is Incorrect");
+		} 
+	} catch(SQLException | ClassNotFoundException e) {
+		e.printStackTrace();
+	}
+		return profile;
+	}
+
+	@Override
+	public Profile store(Profile profile) {
+		try {
+			Connection connection = DBUtility.getConnection();
+			
+			PreparedStatement sequenceStatement = connection.prepareStatement("values(next value for profile_seq)");
+			ResultSet rs = sequenceStatement.executeQuery();
+			int seq = 0;
+			if(rs.next()) {
+				seq = rs.getInt(1);
+			} 
+			if(seq == 0) {
+				// throw some exception to the client
+			} 
+			
+			PreparedStatement insertStatement = 
+					connection.prepareStatement("insert into profile values(?,?,?,?,?)");
+			insertStatement.setInt(1, seq);
+			
+			
+			preparedStatement.setString(2, profile.getName());
+			
+			preparedStatement.setString(3, profile.getPassword());
+		
+			preparedStatement.setLong(4, profile.getPhone());
+			
+			preparedStatement.setString(5, profile.getDob());
+			//profile.setProfileId(seq);
+			preparedStatement.executeUpdate();
+			System.out.println("User created with an id = "+seq);
+			preparedStatement.close();
+			connection.close();
+		} catch (SQLException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		return profile;
+		
+	}
+
+}

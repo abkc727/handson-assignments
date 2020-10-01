@@ -1,0 +1,32 @@
+package com.hsbc.model.service;
+
+import com.hsbc.exception.AuthenticationException;
+import com.hsbc.model.beans.Profile;
+import com.hsbc.model.dao.ProfileDao;
+import com.hsbc.model.utility.ProfileFactory;
+
+public class ProfileServiceImpl implements ProfileService {
+	
+	private ProfileDao profileDao = null;
+	
+
+	public ProfileServiceImpl() {
+		
+		profileDao = (ProfileDao)ProfileFactory.getInstance("dao");
+	}
+
+	@Override
+	public Profile login(int profileId, String password) throws AuthenticationException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Profile registerProfile(Profile profile) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
+
+}

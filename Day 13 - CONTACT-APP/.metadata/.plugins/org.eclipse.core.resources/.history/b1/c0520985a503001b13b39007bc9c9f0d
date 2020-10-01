@@ -1,0 +1,15 @@
+package com.hsbc.model.utility;
+
+public class ProfileFactory {
+	
+	public static Object getInstance(String type) {
+		if(type.equals("dao")) {
+			return new ProfileDaoImpl();
+		}
+		if(type.equals("service")) {
+			return new UserServiceImpl();
+		}
+		return null;
+	}
+
+}

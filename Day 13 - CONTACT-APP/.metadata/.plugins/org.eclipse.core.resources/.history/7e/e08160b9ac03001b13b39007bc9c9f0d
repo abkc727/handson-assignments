@@ -1,0 +1,46 @@
+package com.hsbc.controller;
+
+import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.hsbc.model.beans.Profile;
+import com.hsbc.model.service.ProfileService;
+import com.hsbc.model.utility.ProfileFactory;
+
+/**
+ * Servlet implementation class RegisterServlet
+ */
+@WebServlet("/RegisterServlet")
+public class RegisterServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+  
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+
+		String name = request.getParameter("name");
+		String password = request.getParameter("pw");
+		String phone = request.getParameter("phone");
+		String dob = request.getParameter("dob");
+		Long phoneNo = Long.parseLong(phone);
+		
+		Profile newProfile = new Profile();
+		ProfileService service = (ProfileService)ProfileFactory.getInstance("service");
+		newProfile.setName(name);
+		newProfile.setPassword(password);
+		newProfile.setPhone(phoneNo);
+		
+		Profile profile = service.registerProfile(newProfile);
+		//HttpSession session = request.getSession();
+		//session.setAttribute("userKey", user);
+		
+		RequestDispatcher rd = request.getRequestDispatcher("registrationsuccess.jsp");
+		rd.forward(request, response);
+	}
+
+}

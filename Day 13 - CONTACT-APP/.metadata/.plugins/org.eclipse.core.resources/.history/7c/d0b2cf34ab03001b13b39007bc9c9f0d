@@ -1,0 +1,54 @@
+package com.hsbc.model.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import com.hsbc.exception.AuthenticationException;
+import com.hsbc.model.beans.Profile;
+import com.hsbc.model.utility.DBUtility;
+
+public class ProfileDaoImpl implements ProfileDao {
+
+	@Override
+	public Profile authenticate(int profileId, String password) throws AuthenticationException {
+		Profile profile = null;
+		try {
+			Connection connection = DBUtility.getConnection();
+			PreparedStatement sequenceStatement = connection.prepareStatement("select * from profile where profile_id = ?, password = ?");
+			sequenceStatement.setInt(1, profileId);
+			sequenceStatement.setString(1, password);
+			
+			ResultSet rs = sequenceStatement.executeQuery();
+			while(rs.next()) {
+				profile = new Profile();
+				profile.setDob(rs.getString("dob"));
+				profile.setName(rs.getString("name"));
+				profile.setPassword(rs.getString("password"));
+				profile.setPhone(rs.getLong("phone"));
+				profile.setProfileId(rs.getInt("profile_id"));
+				
+				return profile;
+				
+			}
+			rs.close();
+			sequenceStatement.close();
+			connection.close();
+		
+		if(profile == null) {
+			throw new AuthenticationException("Sorry Username or Password is Incorrect");
+		} 
+	} catch(SQLException | ClassNotFoundException e) {
+		e.printStackTrace();
+	}
+		return profile;
+	}
+
+	@Override
+	public Profile store(Profile profile) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}
